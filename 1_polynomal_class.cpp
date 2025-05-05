@@ -1,9 +1,10 @@
-/* Задание звучит так: Составить описание класса многочленов от одной переменной, задаваемых степенью многочлена
-и массивом коэффициентов. Предусмотреть методы для вычисления значения многочлена для
-заданного аргумента, операции сложения и вычитания многочленов с получением нового объекта-
-многочлена, вывод на экран описания многочлена. Написать программу, демонстрирующую
-работу с этим классом. Программа может содержать меню, позволяющее осуществить проверку
-всех методов класса. */
+/* The task is as follows: 
+Create a class for single-variable polynomials defined by their degree and an array of coefficients. 
+The class should include methods to evaluate the polynomial at a given argument, 
+perform addition and subtraction operations (resulting in a new polynomial object), 
+and display the polynomial's description. 
+Write a program demonstrating the use of this class, which may include a menu to test all the class methods.
+*/
 #include <cmath>
 #include <cstdio>
 
@@ -21,8 +22,7 @@ public:
       namePolynom = new char[20];
       
       int i {0};
-      //копируется только 19 элементов чтобы оставить место для символа конца строки
-      while(n[i] != '\0' && i < 19) //символ 0 это конец строки
+      while(n[i] != '\0' && i < 19)
       {
         namePolynom[i] = n[i];
         i++;
@@ -54,27 +54,27 @@ public:
         int s1 {0};
         double* c1;
 
-        printf("Введите имя многочлена без пробелов(до 19 символов): ");
+        printf("Input name polynom without spaces (19 symbols maximum): ");
         scanf("%19s", n);
         while (getchar() != '\n');
         
-        printf("Введите степень многочлена: ");
+        printf("Input degree polynom: ");
         while (scanf("%d", &s1) != 1) 
         {
             while (getchar() != '\n');
-            printf("Ошибка! Введиет целое число!");
+            printf("Error! Input integer number!");
         }
         while (getchar() != '\n');
 
         c1 = new double[s1+1];
-        printf("Введите %d коэффициентов:\n", s1 + 1);
+        printf("Input %d coefficients:\n", s1 + 1);
         for(int i = 0; i <=s1; i++)
         {
             printf("coefficients[%d]:", i);
             while(scanf("%lf", &c1[i]) != 1)
             {
                 while(getchar() != '\n');
-                printf("Ошибка! Введиет число: ");
+                printf("Error! Input number: ");
             }
         }
 
@@ -88,7 +88,7 @@ public:
 
     double evaluate(double x) const {
         double result = 0.0;
-        for (int i = stepen; i >= 0; --i) { // за основу взята схема Горнера
+        for (int i = stepen; i >= 0; --i) { // relies on Horner's scheme
             result = result * x + coefficients[i];
         }
         return result;
@@ -116,7 +116,7 @@ public:
             }
         }
 
-        return new Polynom("Сумма", result_stepen, new_coeffs);
+        return new Polynom("Sum", result_stepen, new_coeffs);
     }
 
     Polynom* minus(const Polynom* other)  
@@ -140,13 +140,13 @@ public:
             }
         }
 
-        return new Polynom("Вычитание", result_degree, new_coeffs);
+        return new Polynom("Subdivision", result_degree, new_coeffs);
     }
 
     void print()
     {
-        printf("\n-- Дебаггинг! --\n");
-        printf("\n**Многочлен '%s'**\nСтепень: %d\nКоэффициенты: ", namePolynom, stepen);
+        printf("\n-- DEBUGGING! --\n");
+        printf("\n**Polynom '%s'**\nDegree: %d\nCoefficients: ", namePolynom, stepen);
         for(int i = 0; i <= stepen; i++)
         {
             printf("%.2f ", coefficients[i]);
@@ -204,27 +204,27 @@ public:
 
 void PrintMenu(bool debug)
 {
-    printf("\n**Главное меню**\n");
+    printf("\n**Main menu**\n");
     if(debug == true)
     {
-    printf("-- ДЕБАГГИНГ! --\n");
-    printf("0. Демо класса.\n");
+    printf("-- DEBUGGING! --\n");
+    printf("0. Class demo.\n");
     printf("-----------------------------------\n");
     }
-    printf("1. Изменение многочленов.\n");
-    printf("2. Просмотр многочленов.\n"); 
-    printf("3. Сумма двух многочленов.\n");
-    printf("4. Разность двух многочленов.\n");
-    printf("5. Вычисление многочлена в точке x с заданным коэффициентом.\n");
-    printf("6. Выход из программы.\n");
-    printf("-->Выберите действие: ");
+    printf("1. Modifying polynomials.\n");
+    printf("2. Viewing polynomials.\n"); 
+    printf("3. Sum of two polynomials.\n");
+    printf("4. Difference of two polynomials.\n");
+    printf("5. Calculation of a polynomial at point x given coefficient.\n");
+    printf("6. Quitting the program.\n");
+    printf("-->Choose an action: ");
 }
 
 void clearConsole() { printf("\033[2J\033[H"); }
 
 
 void waitForEnter() {
-    printf("\nНажмите Enter чтобы продолжить...");
+    printf("\nPress Enter to continue...");
     fflush(stdout);
     
     int c;
@@ -260,7 +260,7 @@ int main()
     bool debug = false;
     int ch;
     char sel;
-    printf("Включить меню с дебагом?: (Y/N) ");
+    printf("Enable menu with debug?: (Y/N)");
     scanf("%1c", &sel);
     while(getchar() != '\n');
 
@@ -271,10 +271,10 @@ int main()
         debug = false;
     }
     clearConsole();
-    printf("Введите параметры для создания первого многочлена: \n");
+    printf("Enter the parameters to create the first polynomial: \n");
     Polynom* p1 = p1->create();
     clearConsole();
-    printf("Введите параметры для создания второго многочлена: \n");
+    printf("Enter the parameters to create the second polynomial: \n");
     Polynom* p2 = p2->create();
     do 
     {
@@ -286,7 +286,7 @@ int main()
            
             case 1: { 
                 clearConsole();
-                printf("Какой из многочленов пересоздать? Первый (1) или второй (2)?: ");
+                printf("Which polynomial should be recreated? The first (1) or the second (2)?: ");
                 int c;
                 scanf("%1d", &c);
                 while(getchar() != '\n');
@@ -304,7 +304,7 @@ int main()
             }
             case 2: {
                 clearConsole();
-                printf("Какой из многочленов показать? (1 - первый, 2 - второй): ");
+                printf("Which of the polynomials should be shown? (1 - first, 2 - second): ");
                 int c;
                 scanf("%d", &c);
                 while(getchar() != '\n');
@@ -329,8 +329,8 @@ int main()
             }
             case 3: {
                 clearConsole();
-                printf("Сумма многочлена %s ", p1->getName());
-                printf("к многочлену %s равна:\n", p2->getName());
+                printf("Polynom's sum %s ", p1->getName());
+                printf("to polynom %s equals:\n", p2->getName());
                 Polynom* sum = p1->plus(p2);
                 sum->printCanonical();
                 if(debug == true)
@@ -344,8 +344,8 @@ int main()
             }
             case 4: {
                 clearConsole();
-                printf("Разность многочлена %s ", p1->getName());
-                printf("к многочлену %s равна:\n", p2->getName());
+                printf("Difference of a polynomial %s ", p1->getName());
+                printf("to polynom %s equals:\n", p2->getName());
                 Polynom* rasn = p1->minus(p2);
                 rasn->printCanonical();
                 if(debug == true)
@@ -360,8 +360,8 @@ int main()
             case 5: {
                 clearConsole();
                 short chh;
-                printf("ВНИМАНИЕ! Вычисление проводится по схеме Горнера, учитывается нулевой коэффициент!\n");
-                printf("Выберите многочлен (1) или (2): ");
+                printf("ATTENTION! The calculation is carried out according to Horner's scheme, the zero coefficient is taken into account!\n");
+                printf("Choose a polynomial (1) or (2): ");
                 
                 scanf("%1hd", &chh);
                 while(getchar() != '\n');
@@ -375,10 +375,10 @@ int main()
 
 
                     double result = p1->evaluate(x);
-                    printf("В многочлене %s выражение в точке х со значением ", p1->getName());
-                    printf("%f равна: ", x);
+                    printf("In the polynomial %s the expression at the point x with the value ", p1->getName());
+                    printf("%f equals: ", x);
                     printf("%f", result);
-                    printf("\nМногочлен %s: ", p1->getName());
+                    printf("\nPolynomial %s: ", p1->getName());
                     p1->printCanonical();
                     if(debug == true)
                     {
@@ -387,17 +387,17 @@ int main()
                 waitForEnter();
                 } else if (chh == 2)
                 {
-                    printf("Введите точку х: ");
+                    printf("Enter point x: ");
                     double x;
 
                     scanf("%lf", &x);
                     while(getchar() != '\n');
 
                     double result = p2->evaluate(x);
-                    printf("В многочлене %s выражение в точке х со значением ", p2->getName());
-                    printf("%f равна: ", x);
+                    printf("In the polynomial %s the expression at the point x with the value ", p2->getName());
+                    printf("%f equals: ", x);
                     printf("%f", result);
-                    printf("\nМногочлен %s: ", p2->getName());
+                    printf("\nPolynomial %s: ", p2->getName());
                     p2->printCanonical();
                     if(debug == true)
                     {
@@ -411,14 +411,14 @@ int main()
               break;
               case 0: {
                 clearConsole();
-                printf("--Дебаггинг--\n");
-                printf("**Демонстрация работы класса.**\n");
+                printf("--DEBUGGING--\n");
+                printf("**Demonstration of class work.**\n");
                 DemoClassPolynoms();
                 break;
             }
             default:
             {
-                printf("Неправильная цифра меню! Введите корректное значение!\n");
+                printf("Invalid menu number! Enter correct value!\n");
                 waitForEnter();
                 break;
             }
